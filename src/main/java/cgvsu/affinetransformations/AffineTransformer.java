@@ -1,74 +1,98 @@
 package main.java.cgvsu.affinetransformations;
 
+import main.java.cgvsu.affinetransformations.enums.AngleMetric;
 import main.java.cgvsu.affinetransformations.enums.RotationDirection;
 import main.java.cgvsu.math.matrix.Matrix3f;
 import main.java.cgvsu.math.matrix.Matrix4f;
 import main.java.cgvsu.math.vector.Vector3f;
 import main.java.cgvsu.math.vector.Vector4f;
 
+import static main.java.cgvsu.math.MathUtils.PI;
 import static main.java.cgvsu.math.matrix.Matrix3f.*;
+import static main.java.cgvsu.math.matrix.Matrix4f.*;
 
 public class AffineTransformer {
-    public  Matrix3f rotationMatrix3f;
-    public RotationDirection rotationDirection; //TODO: добавить выбор направления вращения
-    public  Matrix3f scaleMatrix3f = new Matrix3f(
+    public Matrix3f rotationMatrix3f = new Matrix3f(
             new float[]{
                     1, 0, 0,
                     0, 1, 0,
                     0, 0, 1
             }
     );
-    public  Matrix4f scaleMatrix4f;
+    public AngleMetric angleMetric;
+    public RotationDirection rotationDirection; //TODO: добавить выбор направления вращения
+    public Matrix3f scaleMatrix3f = new Matrix3f(
+            new float[]{
+                    1, 0, 0,
+                    0, 1, 0,
+                    0, 0, 1
+            }
+    );
+    public Matrix4f scaleMatrix4f;
     public Matrix4f rotationMatrix4f;
-    public  Matrix4f translationMatrix = new Matrix4f(
-            new float[] {
-                    1,0,0,1,
-                    0,1,0,1,
-                    0,0,1,1,
-                    0,0,0,1
+    public Matrix4f translationMatrix = new Matrix4f(
+            new float[]{
+                    1,0,0,0,
+                    0,1,0,0,
+                    0,0,1,0,
+                    1,1,1,1
+
             }
     );
 
-    public Vector3f rotateX(Vector3f vec, float radiansAngle) {
-        rotationMatrix3f.val[M11] = 1;
-        rotationMatrix3f.val[M12] = 0;
-        rotationMatrix3f.val[M13] = 0;
-        rotationMatrix3f.val[M21] = 0;
-        rotationMatrix3f.val[M22] = (float) Math.cos(radiansAngle);
-        rotationMatrix3f.val[M23] = (float) -Math.sin(radiansAngle);
-        rotationMatrix3f.val[M31] = 0;
-        rotationMatrix3f.val[M32] = (float) Math.sin(radiansAngle);
-        rotationMatrix3f.val[M33] = (float) Math.cos(radiansAngle);
-        Matrix3f.mul(vec, scaleMatrix3f);
+
+    public Vector3f rotateXClockwise(Vector3f vec, float radiansAngle) {
+        return null;
+    }
+
+    public Vector3f rotateZClockwise(Vector3f vec, float radiansAngle) {
+        return null;
+    }
+
+    public Vector3f rotateYClockwise(Vector3f vec, float radiansAngle) {
+        return null;
+    }
+
+    public Vector3f rotateXCounterclockwise(Vector3f vec, float radiansAngle) {
+        rotationMatrix3f.val[Matrix3f.M11] = 1;
+        rotationMatrix3f.val[Matrix3f.M12] = 0;
+        rotationMatrix3f.val[Matrix3f.M13] = 0;
+        rotationMatrix3f.val[Matrix3f.M21] = 0;
+        rotationMatrix3f.val[Matrix3f.M22] = (float) Math.cos(radiansAngle);
+        rotationMatrix3f.val[Matrix3f.M23] = (float) -Math.sin(radiansAngle);
+        rotationMatrix3f.val[Matrix3f.M31] = 0;
+        rotationMatrix3f.val[Matrix3f.M32] = (float) Math.sin(radiansAngle);
+        rotationMatrix3f.val[Matrix3f.M33] = (float) Math.cos(radiansAngle);
+        rotationMatrix3f.mul(vec);
         return vec;
     }
 
-    public Vector3f rotateY(Vector3f vec, float radiansAngle) {
+    public Vector3f rotateYCounterclockwise(Vector3f vec, float radiansAngle) {
         //TODO: вычислять синус и косинус заранее
-        rotationMatrix3f.val[M11] = (float) Math.cos(radiansAngle);
-        rotationMatrix3f.val[M12] = 0;
-        rotationMatrix3f.val[M13] = (float) -Math.sin(radiansAngle);
-        rotationMatrix3f.val[M21] = 0;
-        rotationMatrix3f.val[M22] = 1;
-        rotationMatrix3f.val[M23] = 0;
-        rotationMatrix3f.val[M31] = (float) Math.sin(radiansAngle);
-        rotationMatrix3f.val[M32] = 0;
-        rotationMatrix3f.val[M33] = (float) Math.cos(radiansAngle);
-        Matrix3f.mul(vec, scaleMatrix3f);
+        rotationMatrix3f.val[Matrix3f.M11] = (float) Math.cos(radiansAngle);
+        rotationMatrix3f.val[Matrix3f.M12] = 0;
+        rotationMatrix3f.val[Matrix3f.M13] = (float) -Math.sin(radiansAngle);
+        rotationMatrix3f.val[Matrix3f.M21] = 0;
+        rotationMatrix3f.val[Matrix3f.M22] = 1;
+        rotationMatrix3f.val[Matrix3f.M23] = 0;
+        rotationMatrix3f.val[Matrix3f.M31] = (float) Math.sin(radiansAngle);
+        rotationMatrix3f.val[Matrix3f.M32] = 0;
+        rotationMatrix3f.val[Matrix3f.M33] = (float) Math.cos(radiansAngle);
+        rotationMatrix3f.mul(vec);
         return vec;
     }
 
-    public Vector3f rotateZ(Vector3f vec, float radiansAngle) {
-        rotationMatrix3f.val[M11] = (float) Math.cos(radiansAngle);
-        rotationMatrix3f.val[M12] = (float) -Math.sin(radiansAngle);
-        rotationMatrix3f.val[M13] = 0;
-        rotationMatrix3f.val[M21] = (float) Math.sin(radiansAngle);
-        rotationMatrix3f.val[M22] = (float) Math.cos(radiansAngle);
-        rotationMatrix3f.val[M23] = 0;
-        rotationMatrix3f.val[M31] = 0;
-        rotationMatrix3f.val[M32] = 0;
-        rotationMatrix3f.val[M33] = 1;
-        Matrix3f.mul(vec, scaleMatrix3f);
+    public Vector3f rotateZCounterclockwise(Vector3f vec, float radiansAngle) {
+        rotationMatrix3f.val[Matrix3f.M11] = (float) Math.cos(radiansAngle);
+        rotationMatrix3f.val[Matrix3f.M12] = (float) -Math.sin(radiansAngle);
+        rotationMatrix3f.val[Matrix3f.M13] = 0;
+        rotationMatrix3f.val[Matrix3f.M21] = (float) Math.sin(radiansAngle);
+        rotationMatrix3f.val[Matrix3f.M22] = (float) Math.cos(radiansAngle);
+        rotationMatrix3f.val[Matrix3f.M23] = 0;
+        rotationMatrix3f.val[Matrix3f.M31] = 0;
+        rotationMatrix3f.val[Matrix3f.M32] = 0;
+        rotationMatrix3f.val[Matrix3f.M33] = 1;
+        rotationMatrix3f.mul(vec);
         return vec;
     }
 
@@ -80,7 +104,7 @@ public class AffineTransformer {
         return null;
     }
 
-    public Vector4f rotateY(Vector4f vec, float radiansAngle) {
+    public Vector4f rotateYCounterClockwise(Vector4f vec, float radiansAngle) {
         return null;
     }
 
@@ -93,31 +117,31 @@ public class AffineTransformer {
     }
 
     public Vector3f scaleX(Vector3f vec, float scaleFactorX) {
-        scaleMatrix3f.val[M11] = scaleFactorX;
-        scaleMatrix3f.val[M22] = scaleMatrix3f.val[M33] = 1;
-        Matrix3f.mul(vec, scaleMatrix3f);
+        scaleMatrix3f.val[Matrix3f.M11] = scaleFactorX;
+        scaleMatrix3f.val[Matrix3f.M22] = scaleMatrix3f.val[Matrix3f.M33] = 1;
+        rotationMatrix3f.mul(vec);
         return vec;
     }
 
     public Vector3f scaleY(Vector3f vec, float scaleFactorY) {
-        scaleMatrix3f.val[M22] = scaleFactorY;
-        scaleMatrix3f.val[M11] = scaleMatrix3f.val[M33] = 1;
-        Matrix3f.mul(vec, scaleMatrix3f);
+        scaleMatrix3f.val[Matrix3f.M22] = scaleFactorY;
+        scaleMatrix3f.val[Matrix3f.M11] = scaleMatrix3f.val[Matrix3f.M33] = 1;
+        rotationMatrix3f.mul(vec);
         return vec;
     }
 
     public Vector3f scaleZ(Vector3f vec, float scaleFactorZ) {
-        scaleMatrix3f.val[M33] = scaleFactorZ;
-        scaleMatrix3f.val[M11] = scaleMatrix3f.val[M22] = 1;
-        Matrix3f.mul(vec, scaleMatrix3f);
+        scaleMatrix3f.val[Matrix3f.M33] = scaleFactorZ;
+        scaleMatrix3f.val[Matrix3f.M11] = scaleMatrix3f.val[Matrix3f.M22] = 1;
+        rotationMatrix3f.mul(vec);
         return vec;
     }
 
     public Vector3f scale(Vector3f vec, Vector3f scaleVector) {
-        scaleMatrix3f.val[M11] = scaleVector.x;
-        scaleMatrix3f.val[M22] = scaleVector.y;
-        scaleMatrix3f.val[M33] = scaleVector.z;
-        Matrix3f.mul(vec, scaleMatrix3f);
+        scaleMatrix3f.val[Matrix3f.M11] = scaleVector.x;
+        scaleMatrix3f.val[Matrix3f.M22] = scaleVector.y;
+        scaleMatrix3f.val[Matrix3f.M33] = scaleVector.z;
+        rotationMatrix3f.mul(vec);
         return vec;
     }
 
@@ -139,42 +163,42 @@ public class AffineTransformer {
     }
 
     public Vector4f translateX(Vector3f vec, float distanceX) {
-        translationMatrix.val[14] = distanceX;
-        translationMatrix.val[24] = 0;
-        translationMatrix.val[34] = 0;
-        translationMatrix.val[44] = 1;
+        translationMatrix.val[M14] = distanceX;
+        translationMatrix.val[M24] = 0;
+        translationMatrix.val[M34] = 0;
+        translationMatrix.val[M44] = 1;
         var vec4f = new Vector4f(vec);
-        Matrix4f.mul(vec4f, translationMatrix);
+        translationMatrix.mul(vec4f);
         return vec4f;
     }
 
     public Vector4f translateY(Vector3f vec, float distanceY) {
-        translationMatrix.val[14] = 0;
-        translationMatrix.val[24] = distanceY;
-        translationMatrix.val[34] = 0;
-        translationMatrix.val[44] = 1;
+        translationMatrix.val[Matrix4f.M14] = 0;
+        translationMatrix.val[Matrix4f.M24] = distanceY;
+        translationMatrix.val[Matrix4f.M34] = 0;
+        translationMatrix.val[Matrix4f.M44] = 1;
         var vec4f = new Vector4f(vec);
-        Matrix4f.mul(vec4f, translationMatrix);
+        translationMatrix.mul(vec4f);
         return vec4f;
     }
 
     public Vector4f translateZ(Vector3f vec, float distanceZ) {
-        translationMatrix.val[14] = 0;
-        translationMatrix.val[24] = 0;
-        translationMatrix.val[34] = distanceZ;
-        translationMatrix.val[44] = 1;
+        translationMatrix.val[Matrix4f.M14] = 0;
+        translationMatrix.val[Matrix4f.M24] = 0;
+        translationMatrix.val[Matrix4f.M34] = distanceZ;
+        translationMatrix.val[Matrix4f.M44] = 1;
         var vec4f = new Vector4f(vec);
-        Matrix4f.mul(vec4f, translationMatrix);
+        translationMatrix.mul(vec4f);
         return vec4f;
     }
 
     public Vector4f translate(Vector3f vec, Vector3f translationVector) {
-        translationMatrix.val[14] = translationVector.x;
-        translationMatrix.val[24] = translationVector.y;
-        translationMatrix.val[34] = translationVector.z;
-        translationMatrix.val[44] = 1;
+        translationMatrix.val[Matrix4f.M14] = translationVector.x;
+        translationMatrix.val[Matrix4f.M24] = translationVector.y;
+        translationMatrix.val[Matrix4f.M34] = translationVector.z;
+        translationMatrix.val[Matrix4f.M44] = 1;
         var vec4f = new Vector4f(vec);
-        Matrix4f.mul(vec4f, translationMatrix);
+        translationMatrix.mul(vec4f);
         return vec4f;
     }
 
@@ -192,5 +216,9 @@ public class AffineTransformer {
 
     public Vector4f translate(Vector4f vec, Vector4f translateVector) {
         return null;
+    }
+
+    public float convertDegreesToRadians(float val) {
+        return val / 180 * PI;
     }
 }

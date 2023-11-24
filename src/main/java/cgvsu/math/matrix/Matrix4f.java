@@ -344,10 +344,11 @@ public class Matrix4f implements Matrix<Matrix4f> {
      * @return The changed given vector.
      */
     public Vector4f mul(Vector4f v) {
-        v.x = val[M11] * v.x + val[M12] * v.y + val[M13] * v.z + val[M14] * v.w;
-        v.y = val[M21] * v.x + val[M22] * v.y + val[M23] * v.z + val[M24] * v.w;
-        v.z = val[M31] * v.x + val[M32] * v.y + val[M33] * v.z + val[M34] * v.w;
-        v.w = val[M41] * v.x + val[M42] * v.y + val[M43] * v.z + val[M44] * v.w;
+        var tmp = new Vector4f(v);
+        v.x = val[M11] * tmp.x + val[M12] * tmp.y + val[M13] * tmp.z + val[M14] * tmp.w;
+        v.y = val[M21] * tmp.x + val[M22] * tmp.y + val[M23] * tmp.z + val[M24] * tmp.w;
+        v.z = val[M31] * tmp.x + val[M32] * tmp.y + val[M33] * tmp.z + val[M34] * tmp.w;
+        v.w = val[M41] * tmp.x + val[M42] * tmp.y + val[M43] * tmp.z + val[M44] * tmp.w;
         return v;
     }
 

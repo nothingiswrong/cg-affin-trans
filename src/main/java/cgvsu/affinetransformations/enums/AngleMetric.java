@@ -1,4 +1,5 @@
 package main.java.cgvsu.affinetransformations.enums;
 
-public enum AngleMetrics {
+public enum AngleMetric {
+    RADIANS, DEGREES
 }
