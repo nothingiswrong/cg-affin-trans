@@ -12,7 +12,7 @@ import static main.java.cgvsu.math.matrix.Matrix4f.*;
 
 public class AffineTransformer {
     private final Vector3f templateVector3f = new Vector3f();
-    private final Vector4f templateVector4f = new Vector4f();
+    private final Vector4f templateVector4f = new Vector4f(new Vector3f());
     
     public Matrix3f rotationMatrix3f = new Matrix3f(
             new float[]{
@@ -233,7 +233,7 @@ public class AffineTransformer {
         scaleMatrix3f.val[Matrix3f.M11] = scaleVector.x;
         scaleMatrix3f.val[Matrix3f.M22] = scaleVector.y;
         scaleMatrix3f.val[Matrix3f.M33] = scaleVector.z;
-        rotationMatrix3f.mul(vec);
+        scaleMatrix3f.mul(vec);
         return vec;
     }
 
@@ -241,21 +241,21 @@ public class AffineTransformer {
     public Vector4f scaleX(Vector4f vec, float scaleFactorX) {
         scaleMatrix4f.val[Matrix4f.M11] = scaleFactorX;
         scaleMatrix4f.val[Matrix4f.M22] = scaleMatrix4f.val[Matrix4f.M33] = scaleMatrix4f.val[Matrix4f.M44]  = 1;
-        rotationMatrix4f.mul(vec);
+        scaleMatrix4f.mul(vec);
         return vec;
     }
 
     public Vector4f scaleY(Vector4f vec, float scaleFactorY) {
         scaleMatrix4f.val[Matrix4f.M22] = scaleFactorY;
         scaleMatrix4f.val[Matrix4f.M11] = scaleMatrix4f.val[Matrix4f.M33] = scaleMatrix4f.val[Matrix4f.M44]  = 1;
-        rotationMatrix4f.mul(vec);
+        scaleMatrix4f.mul(vec);
         return null;
     }
 
     public Vector4f scaleZ(Vector4f vec, float scaleFactorZ) {
         scaleMatrix4f.val[Matrix4f.M33] = scaleFactorZ;
         scaleMatrix4f.val[Matrix4f.M11] = scaleMatrix4f.val[Matrix4f.M22] = scaleMatrix4f.val[Matrix4f.M44] = 1;
-        rotationMatrix4f.mul(vec);
+        scaleMatrix4f.mul(vec);
         return vec;
     }
 
@@ -263,7 +263,7 @@ public class AffineTransformer {
         scaleMatrix4f.val[Matrix4f.M11] = scaleVector.x;
         scaleMatrix4f.val[Matrix4f.M22] = scaleVector.y;
         scaleMatrix4f.val[Matrix4f.M33] = scaleVector.z;
-        rotationMatrix4f.mul(vec);
+        scaleMatrix4f.mul(vec);
         return vec;
     }
 
@@ -380,7 +380,7 @@ public class AffineTransformer {
     }
 
     private float convertDegreesToRadians(float val) {
-        return val / 180 * PI;
+        return val / 180.0f * PI;
     }
 
     public AngleMetric getAngleMetric() {

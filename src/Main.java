@@ -15,6 +15,7 @@ public class Main {
         scvec.y = 5;
         scvec.z = 3;
         var aff = new AffineTransformer();
-        aff.translateZ(vec, 5f);
+        aff.translate(vec, scvec);
+        System.out.println("");
     }
 }
