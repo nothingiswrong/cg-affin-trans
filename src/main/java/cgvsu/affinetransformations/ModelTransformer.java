@@ -1,81 +1,31 @@
 package main.java.cgvsu.affinetransformations;
 
-import main.java.cgvsu.affinetransformations.enums.AngleMetric;
-import main.java.cgvsu.affinetransformations.enums.RotationDirection;
+import main.java.cgvsu.math.matrix.Matrix4f;
+import main.java.cgvsu.math.vector.Vector4f;
 import main.java.cgvsu.model.Model;
 
 public class ModelTransformer {
-    public AffineTransformer affineTransformer;
 
-    private RotationDirection rotationDirection;
-    private AngleMetric angleMetric;
+    private final Vector4f intermediateCalculationVector = new Vector4f(new float[]{0, 0, 0, 1});
+    private Matrix4f transformingMatrix = new Matrix4f();
 
-    public RotationDirection getRotationDirection() {
-        return rotationDirection;
+    public ModelTransformer(Matrix4f transformingMatrix) {
+        this.transformingMatrix = transformingMatrix;
     }
 
-    public void setRotationDirection(RotationDirection rotationDirection) {
-        this.rotationDirection = rotationDirection;
-        affineTransformer.setRotationDirection(rotationDirection);
-    }
-
-    public AngleMetric getAngleMetric() {
-        return angleMetric;
-    }
-
-    public void setAngleMetric(AngleMetric angleMetric) {
-        this.angleMetric = angleMetric;
-        affineTransformer.setAngleMetric(angleMetric);
-    }
-    public void rotateX(Model model, float angle) {
+    public void transformModel(Model model) {
         for (var v : model.vertices) {
-            affineTransformer.rotateX(v, angle);
-        }
-    }
-    public void rotateZ(Model model, float angle) {
-        for (var v : model.vertices) {
-            affineTransformer.rotateZ(v, angle);
-        }
-    }
-    public void rotateY(Model model, float angle) {
-        for (var v : model.vertices) {
-            affineTransformer.rotateY(v, angle);
-        }
-    }
-    public void scaleX(Model model, float scaleFactor) {
-        for (var v : model.vertices) {
-            affineTransformer.scaleX(v, scaleFactor);
-        }
-    }
+            intermediateCalculationVector.x = v.x;
+            intermediateCalculationVector.y = v.y;
+            intermediateCalculationVector.z = v.z;
 
-    public void scaleY(Model model, float scaleFactor) {
-        for (var v : model.vertices) {
-            affineTransformer.scaleY(v, scaleFactor);
-        }
-    }
+            transformingMatrix.mul(intermediateCalculationVector);
 
-    public void scaleZ(Model model, float scaleFactor) {
-        for (var v : model.vertices) {
-            affineTransformer.scaleZ(v, scaleFactor);
+            v.x = intermediateCalculationVector.x;
+            v.y = intermediateCalculationVector.y;
+            v.z = intermediateCalculationVector.z;
         }
-    }
 
-    public void translateX(Model model, float distance) {
-        for (var v : model.vertices) {
-            affineTransformer.translateX(v, distance);
-        }
-    }
-
-    public void translateZ(Model model, float distance) {
-        for (var v : model.vertices) {
-            affineTransformer.translateZ(v, distance);
-        }
-    }
-
-    public void translateY(Model model, float distance) {
-        for (var v : model.vertices) {
-            affineTransformer.translateY(v, distance);
-        }
     }
 
 

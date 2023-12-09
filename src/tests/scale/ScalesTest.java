@@ -4,7 +4,6 @@ import main.java.cgvsu.affinetransformations.AffineTransformer;
 import main.java.cgvsu.math.vector.Vector3f;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ScalesTest {
