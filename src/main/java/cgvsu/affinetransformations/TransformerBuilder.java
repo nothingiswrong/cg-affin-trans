@@ -27,7 +27,7 @@ public class TransformerBuilder {
 
     public TransformerBuilder(AngleMetric metric) {
         switch (metric) {
-            case DEGREES -> metricMultiplier = (float) 1 / 180 * PI;
+            case DEGREES -> metricMultiplier = (float)  180 / PI;
             default -> metricMultiplier = 1;
         }
     }
