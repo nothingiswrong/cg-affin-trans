@@ -27,12 +27,13 @@ public class TransformerBuilder {
 
     public TransformerBuilder(AngleMetric metric) {
         switch (metric) {
-            case DEGREES -> metricMultiplier = (float)  180 / PI;
+            case DEGREES -> metricMultiplier = (float) 1 / 180 * PI;
             default -> metricMultiplier = 1;
         }
     }
 
     private final float metricMultiplier;
+
     public TransformerBuilder rotateXCounterClockwise(float radiansAngle) {
         var cos = (float) Math.cos(radiansAngle * metricMultiplier);
         var sin = (float) Math.sin(radiansAngle * metricMultiplier);
@@ -86,12 +87,15 @@ public class TransformerBuilder {
     public TransformerBuilder rotateXClockwise(float radiansAngle) {
         return rotateXCounterClockwise(-radiansAngle);
     }
+
     public TransformerBuilder rotateZClockwise(float radiansAngle) {
         return rotateZCounterClockwise(-radiansAngle);
     }
+
     public TransformerBuilder rotateYClockwise(float radiansAngle) {
-       return rotateYCounterClockwise(-radiansAngle);
+        return rotateYCounterClockwise(-radiansAngle);
     }
+
     public TransformerBuilder scaleX(float scaleFactor) {
         operationMatrix.val[M11] *= scaleFactor;
         return this;
@@ -117,8 +121,8 @@ public class TransformerBuilder {
 
 
     public TransformerBuilder translateX(float distance) {
-       operationMatrix.val[M14] += distance;
-       return this;
+        operationMatrix.val[M14] += distance;
+        return this;
     }
 
     public TransformerBuilder translateY(float distance) {
@@ -140,7 +144,7 @@ public class TransformerBuilder {
     }
 
     public ModelTransformer build() {
-        var mt = new ModelTransformer(operationMatrix);
+        var mt = new ModelTransformer(operationMatrix.cpy());
         restoreOperationMatrix();
         return mt;
     }
