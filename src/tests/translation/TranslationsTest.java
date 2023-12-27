@@ -1,6 +1,5 @@
 package tests.translation;
 
-import main.java.cgvsu.affinetransformations.AffineTransformer;
 import main.java.cgvsu.math.matrix.Matrix3f;
 import main.java.cgvsu.math.vector.Vector3f;
 import org.junit.jupiter.api.Test;

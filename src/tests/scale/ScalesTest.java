@@ -1,6 +1,5 @@
 package tests.scale;
 
-import main.java.cgvsu.affinetransformations.AffineTransformer;
 import main.java.cgvsu.math.vector.Vector3f;
 import org.junit.jupiter.api.Test;
 
