@@ -11,8 +11,6 @@ import java.rmi.MarshalException;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-      var s = Files.readString(Path.of("/home/fyodor/IdeaProjects/cg-affin-trans/src/3DModels/Faceform/WrapSkull.obj"));
-        var model =  ObjReader.read(s);
         System.out.println();
    }
 }
